@@ -7,7 +7,7 @@ class Node
 {
 public:
     std::shared_ptr<Node> next;
-    std::shared_ptr<Node> prev;
+    std::weak_ptr<Node> prev;
     T value;
     Node(const T& v);
     ~Node() {}
@@ -16,7 +16,6 @@ public:
 template <class T>
 Node<T>::Node(const T& v) :
         next(nullptr),
-        prev(nullptr),
         value(v)
 {}
 
