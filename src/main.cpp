@@ -28,10 +28,12 @@ int main()
         std::cout<<"Previous element: "<<list.getPrevious(ola)->value<<std::endl;
         std::cout<<"Next element: "<<list.getNext(domi)->value<<std::endl;
         list.getBackWard("ola");
+        list.show();
         list.removeFirst();
         list.removeLast();
-        std::cout<<"count: "<<list.count()<<std::endl;
         list.show();
+        std::cout<<"count all: "<<list.count()<<std::endl;
+        std::cout<<"count single: "<<list.count("rafal")<<std::endl;
     }
     catch(const EmptyListError& error)
     {
