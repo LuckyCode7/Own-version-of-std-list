@@ -36,13 +36,13 @@ template<class T>
 void List<T>::removeFirst()
 {
     first = first->next;
-    first->prev = nullptr;
+    first->prev.lock() = nullptr;
 }
 
 template<class T>
 void List<T>::removeLast()
 {
-    last = last->prev;
+    last = last->prev.lock();
     last->next = nullptr;
 }
 
@@ -90,7 +90,7 @@ int List<T>::count(const T& value) const
 template<class T>
 void List<T>::addLast(std::shared_ptr<Node<T>> node)
 {
-    if(node->next != nullptr || node->prev != nullptr)
+    if(node->next != nullptr || node->prev.lock() != nullptr)
     {
         throw InvalidNextOrPrevValue();
     }
@@ -179,7 +179,7 @@ std::shared_ptr<Node<T>> List<T>::getBackWard(const T& value) const
             else
             {
                 std::cout << "Going through " << current->value << std::endl;
-                current = current->prev;
+                current = current->prev.lock();
             }
         } while(current);
         throw NotFoundError();
@@ -201,7 +201,7 @@ std::shared_ptr<Node<T>> List<T>::getTail() const
 template<class T>
 std::shared_ptr<Node<T>> List<T>::getPrevious(std::shared_ptr<Node<T>> node) const
 {
-    return node->prev;
+    return node->prev.lock();
 }
 
 template<class T>
