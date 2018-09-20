@@ -27,5 +27,5 @@ script:
   - cmake ..
   - make
   - ./list
-  - valgrind --leak-check=full ---show-leak-kinds=all -v ./list
+  - valgrind --leak-check=full --show-leak-kinds=all -v ./list
 
