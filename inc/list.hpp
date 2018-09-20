@@ -7,18 +7,19 @@ class List
 {
 public:
     List();
-    void addLast(std::shared_ptr<Node<T> > node);                        // dodaje element na koniec listy
-    void addFirst(std::shared_ptr<Node<T>> node);                       // dodaje element na początek listy
-    std::shared_ptr<Node<T>> get(const T& value) const;                      // zwraca element o wskazanej wartości szukając od pierwszego elementu
-    std::shared_ptr<Node<T>> getBackWard(const T& value) const;             // zwraca element o wskazanej wartości szukając od ostatniego elementu
-    std::shared_ptr<Node<T>> getHead() const;
-    std::shared_ptr<Node<T>> getTail() const;
-    std::shared_ptr<Node<T>> getPrevious(std::shared_ptr<Node<T>> node) const;
-    std::shared_ptr<Node<T>> getNext(std::shared_ptr<Node<T>> node) const;
-    void removeFirst();
-    void removeLast();
-    int count() const;
-    void show() const;
+    void addLast(std::shared_ptr<Node<T> > node);                                   // dodaje element na koniec listy
+    void addFirst(std::shared_ptr<Node<T>> node);                                   // dodaje element na początek listy
+    std::shared_ptr<Node<T>> get(const T& value) const;                             // zwraca element o wskazanej wartości szukając od pierwszego elementu
+    std::shared_ptr<Node<T>> getBackWard(const T& value) const;                     // zwraca element o wskazanej wartości szukając od ostatniego elementu
+    std::shared_ptr<Node<T>> getHead() const;                                       // zwraca pierwszy element
+    std::shared_ptr<Node<T>> getTail() const;                                       // zwraca ostatni element
+    std::shared_ptr<Node<T>> getPrevious(std::shared_ptr<Node<T>> node) const;      // zwraca poprzedni element
+    std::shared_ptr<Node<T>> getNext(std::shared_ptr<Node<T>> node) const;          // zwraca kolejny element
+    void removeFirst();                                                             // usuwa pierwszy element
+    void removeLast();                                                              // usuwa ostatni element
+    int count() const;                                                              // zwraca liczbę wszystkich elementów listy
+    int count(const T& value) const;                                                // zwraca liczbę konkretnych elementów listy
+    void show() const;                                                              // pokazuje elementy listy
     ~List() {}
 private:
     std::shared_ptr<Node<T>> first;
@@ -64,12 +65,26 @@ int List<T>::count() const
 {
     int howMany = 0;
     std::shared_ptr<Node<T>> current = first;
-    while(current->next != nullptr)
+    while(current != nullptr)
     {
-        howMany++;
+        ++howMany;
         current = current->next;
     }
-    return ++howMany;
+    return howMany;
+}
+
+template<class T>
+int List<T>::count(const T& value) const
+{
+    int howMany = 0;
+    std::shared_ptr<Node<T>> current = first;
+    while(current != nullptr)
+    {
+        if(current->value == value)
+        ++howMany;
+        current = current->next;
+    }
+    return howMany;
 }
 
 template<class T>
