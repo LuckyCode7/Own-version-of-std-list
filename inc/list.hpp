@@ -24,6 +24,7 @@ public:
     void replace(const T& target, const T& value);                                  // zamienia wartość węzła
     void show();                                                                    // pokazuje elementy listy
     void clear();                                                                   // czyści listę
+    T& operator[](const int& node);
     ~List() {}
 private:
     std::shared_ptr<Node<T>> first;
@@ -262,4 +263,24 @@ std::shared_ptr<Node<T>> List<T>::getNext(std::shared_ptr<Node<T>> node) const
     return node->next;
 }
 
+template<class T>
+T& List<T>::operator[](const int& node)
+{
+    if(!checkIfListIsEmpty() && node < count())
+    {
+        int whichNode = 0;
+        std::shared_ptr<Node<T>> current = first;
+        while(current != nullptr)
+        {
+            if(whichNode == node) break;
+            else
+            {
+                current = current->next;
+                ++whichNode;
+            }
+        }
+        return current->value;
+    }
+    else throw std::out_of_range("operator[] out of range");
+}
 
