@@ -5,7 +5,6 @@
 #include "../inc/node.hpp"
 #include "../inc/list.hpp"
 
-
 int main()
 {
     try
@@ -29,6 +28,7 @@ int main()
         assert(list.getNext(rafal) == franek);
         assert(list.getBackWard("ola") == ola);
         assert(list.count() == 4);
+        assert(list[3] == "franek");
         list.show();
 
         list.removeFirst();
@@ -56,6 +56,10 @@ int main()
         std::cout<<error.what()<<std::endl;
     }
     catch(const InvalidNextOrPrevValue& error)
+    {
+        std::cout<<error.what()<<std::endl;
+    }
+    catch(const std::out_of_range& error)
     {
         std::cout<<error.what()<<std::endl;
     }
