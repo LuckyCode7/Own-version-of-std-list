@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include <memory>
 #include <string>
 #include "../inc/node.hpp"
@@ -13,27 +14,38 @@ int main()
 
         auto rafal = std::make_shared<Node<std::string>>("rafal");
         auto franek = std::make_shared<Node<std::string>>("franek");
-        auto domi = std::make_shared<Node<std::string>>("kasia");
+        auto kasia = std::make_shared<Node<std::string>>("kasia");
         auto ola = std::make_shared<Node<std::string>>("ola");
-
 
         list.addLast(ola);
         list.addLast(rafal);
         list.addLast(franek);
-        //list.addFirst(rafal); // wksaźnik next rafala juz się zmienił wyżej !!!
-        list.addFirst(domi);
-        list.get("rafal");
-        std::cout<<"HEAD: "<<list.getHead()->value<<std::endl;
-        std::cout<<"TAIL: "<<list.getTail()->value<<std::endl;
-        std::cout<<"Previous element: "<<list.getPrevious(ola)->value<<std::endl;
-        std::cout<<"Next element: "<<list.getNext(domi)->value<<std::endl;
-        list.getBackWard("ola");
+        list.addFirst(kasia);
+
+        assert(list.get("rafal") == rafal);
+        assert(list.getHead()->value == "kasia");
+        assert(list.getTail()->value == "franek");
+        assert(list.getPrevious(ola) == kasia);
+        assert(list.getNext(rafal) == franek);
+        assert(list.getBackWard("ola") == ola);
+        assert(list.count() == 4);
         list.show();
+
         list.removeFirst();
         list.removeLast();
+        assert(list.count() == 2);
+        list.replace("rafal", "anonymous");
+        assert(list.count("rafal") == 0);
         list.show();
-        std::cout<<"count all: "<<list.count()<<std::endl;
-        std::cout<<"count single: "<<list.count("rafal")<<std::endl;
+
+        List<std::string> list2(list);
+        list2.show();
+        list2.clear();
+        list2.show();
+
+        List<std::string> list3(std::move(list));
+        list3.show();
+        list.show();
     }
     catch(const EmptyListError& error)
     {
