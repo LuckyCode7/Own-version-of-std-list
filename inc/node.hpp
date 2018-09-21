@@ -15,7 +15,7 @@ public:
 
 template <class T>
 Node<T>::Node(const T& v) :
-        next(nullptr),
-        value(v)
+    next(nullptr),
+    value(v)
 {}
 
